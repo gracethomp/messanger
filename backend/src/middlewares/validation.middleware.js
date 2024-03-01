@@ -1,5 +1,5 @@
 import { getUserByEmail } from "../controllers/userController.js";
-import yup from 'yup';
+import yup from "yup";
 
 export const createUserSchema = yup.object().shape({
   email: yup
@@ -11,4 +11,12 @@ export const createUserSchema = yup.object().shape({
       const user = await getUserByEmail(value);
       return !user;
     }),
+  password: yup
+    .string()
+    .required()
+    .min(8)
+    .matches(
+      /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/,
+      "Password must contain at least one uppercase letter, one lowercase letter, and one number"
+    ),
 });
