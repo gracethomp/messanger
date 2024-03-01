@@ -14,7 +14,8 @@ import {
   where,
   query,
 } from "firebase/firestore";
-import { createUserSchema } from "../middlewares/validation.middleware.js";
+import { createUserSchema, loginSchema } from "../middlewares/validation.middleware.js";
+import { getUserByEmail } from '../services/userService.js';
 
 const db = getFirestore(firebase);
 
@@ -30,17 +31,20 @@ export const createUser = async (req, res, next) => {
   }
 };
 
-export const getUserByEmail = async (email) => {
+export const login = async (req, res, next) => {
   try {
-    const q = query(collection(db, "users"), where("email", "==", email));
-    const querySnapshot = await getDocs(q);
-    let user = null;
-    querySnapshot.forEach((doc) => {
-      user = doc.data();
-    });
-    return user;
+    await loginSchema.validate(req.body, {abortEarly: false})
+    const userRecord = await getUserByEmail(req.body.email);
+    if (!userRecord) {
+      throw new Error('User not found')
+    } else {
+      const correctPassword = await argon2.verify(userRecord.password, req.body.password);
+      if (!correctPassword) {
+        throw new Error('Incorrect password')
+      }
+    }
+    res.status(200).send({...userRecord});
   } catch (error) {
-    console.error("Error getting user by email:", error);
-    throw error;
+    res.status(400).send(error.message);
   }
 };
