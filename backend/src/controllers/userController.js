@@ -16,6 +16,7 @@ import {
 } from "firebase/firestore";
 import { createUserSchema, loginSchema } from "../middlewares/validation.middleware.js";
 import { getUserByEmail } from '../services/userService.js';
+import { generateToken } from '../utils/jwtGenerator.js';
 
 const db = getFirestore(firebase);
 
@@ -43,7 +44,9 @@ export const login = async (req, res, next) => {
         throw new Error('Incorrect password')
       }
     }
-    res.status(200).send({...userRecord});
+    const token = generateToken(userRecord);
+    res.setHeader('Authorization', `Bearer ${token}`);
+    res.status(200).send('Login successful');
   } catch (error) {
     res.status(400).send(error.message);
   }
