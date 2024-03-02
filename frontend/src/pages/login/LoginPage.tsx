@@ -1,6 +1,10 @@
+import { useAppDispatch } from '../../hooks/redux';
+import { login } from "../../store/slices/authSlice";
 import { Button, Input } from "../../ui/common";
 
 const LoginPage = () => {
+  const dispatch = useAppDispatch();
+
   const inputPlaceholders: string[] = ["email", "password"];
 
   return (
@@ -9,7 +13,7 @@ const LoginPage = () => {
       {inputPlaceholders.map((value) => (
         <Input placeholder={value} />
       ))}
-      <Button>Log in</Button>
+      <Button onClick={() => dispatch(login())}>Log in</Button>
     </div>
   );
 };

@@ -1,4 +1,3 @@
-import {useSelector } from "react-redux";
 import {
   BrowserRouter as Router,
   Route,
@@ -7,10 +6,10 @@ import {
 } from "react-router-dom";
 
 import { LoginPage } from "./pages";
-import { RootState } from "./store";
+import { useAppSelector } from "./hooks/redux";
 
 function App() {
-  const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
+  const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
 
   return (
     <BrowserRouter>
