@@ -1,4 +1,4 @@
-import { Input } from "../../ui/common";
+import { Button, Input } from "../../ui/common";
 
 const LoginPage = () => {
   const inputPlaceholders: string[] = ["email", "password"];
@@ -9,6 +9,7 @@ const LoginPage = () => {
       {inputPlaceholders.map((value) => (
         <Input placeholder={value} />
       ))}
+      <Button>Log in</Button>
     </div>
   );
 };
