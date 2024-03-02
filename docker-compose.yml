@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: ./Dockerfile.dev
+    env_file: ./.env.dev
+    ports:
+      - ${BACKEND_PORT}:${BACKEND_PORT}
+    volumes:
+      - ./backend/src:/app/src
+      - ./backend/test:/app/test
+  
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: ./Dockerfile.dev
+    env_file: ./.env.dev
+    ports:
+      - ${FRONTEND_PORT}:${FRONTEND_PORT}
+    volumes:
+      - ./frontend/src:/app/src
+    depends_on:
+      - backend

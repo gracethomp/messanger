@@ -22,7 +22,7 @@ const db = getFirestore(firebase);
 
 export const createUser = async (req, res, next) => {
   try {
-    await createUserSchema.validate(req.body, { abortEarly: false });
+    await createUserSchema.validate(req.body, { abortEarly: false }); //to change
     const passwordHashed = await argon2.hash(req.body.password);
     const data = { ...req.body, password: passwordHashed };
     await addDoc(collection(db, "users"), data);
@@ -34,7 +34,7 @@ export const createUser = async (req, res, next) => {
 
 export const login = async (req, res, next) => {
   try {
-    await loginSchema.validate(req.body, {abortEarly: false})
+    await loginSchema.validate(req.body, {abortEarly: false}); //to change
     const userRecord = await getUserByEmail(req.body.email);
     if (!userRecord) {
       throw new Error('User not found')
