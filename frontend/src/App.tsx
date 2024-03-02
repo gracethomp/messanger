@@ -1,14 +1,13 @@
-import { Provider, useSelector } from "react-redux";
+import {useSelector } from "react-redux";
 import {
   BrowserRouter as Router,
   Route,
   BrowserRouter,
   Routes,
-  Navigate,
 } from "react-router-dom";
 
 import { LoginPage } from "./pages";
-import { RootState, store } from "./store";
+import { RootState } from "./store";
 
 function App() {
   const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
