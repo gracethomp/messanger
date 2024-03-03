@@ -14,7 +14,7 @@ import {
   where,
   query,
 } from "firebase/firestore";
-import { createUserSchema, loginSchema } from "../middlewares/validation.middleware.js";
+import { createUserSchema, loginSchema } from "../middlewares/userValidation.middleware.js";
 import { getUserByEmail } from '../services/userService.js';
 import { generateToken } from '../utils/jwtGenerator.js';
 
