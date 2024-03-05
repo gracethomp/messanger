@@ -5,7 +5,7 @@ import {
   Routes,
 } from "react-router-dom";
 
-import { LoginPage } from "./pages";
+import { ChatPage, LoginPage, NewChat } from "./pages";
 import { useAppSelector } from "./hooks/redux";
 
 function App() {
@@ -16,28 +16,17 @@ function App() {
       <Routes>
         <Route
           path="/"
-          element={
-            isLoggedIn ? (
-              <div>
-                <p>dsadas</p>
-              </div>
-            ) : (
-              <LoginPage />
-            )
-          }
+          element={isLoggedIn ? <ChatPage /> : <LoginPage />}
         ></Route>
         <Route
           path="/login"
-          element={
-            !isLoggedIn ? (
-              <LoginPage />
-            ) : (
-              <div>
-                <p>dsadas</p>
-              </div>
-            )
-          }
+          element={!isLoggedIn ? <LoginPage /> : <ChatPage />}
         ></Route>
+        <Route
+          path="/new-chat"
+          element={isLoggedIn ? <NewChat /> : <LoginPage />}
+        ></Route>
+        <Route path="*" element={isLoggedIn ? <ChatPage /> : <LoginPage />} />
       </Routes>
     </BrowserRouter>
   );

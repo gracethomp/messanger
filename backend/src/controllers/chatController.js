@@ -19,7 +19,7 @@ const db = getFirestore(firebase);
 export const createChat = async (req, res) => {
   try {
     await createChatSchema.validate(req.body, { abortEarly: false });
-    const body = {...req.body, user1: req.user1};
+    const body = { ...req.body, user1: req.user1 };
     const data = body;
     await addDoc(collection(db, "chatRooms"), data);
     res.status(200).send("chat created successfully");
@@ -42,11 +42,11 @@ export const getChatsByUser = async (req, res) => {
 
     const chats = [];
     chatsSnapshot.forEach((doc) => {
-      chats.push({...doc.data(), id: doc.id});
+      chats.push({ ...doc.data(), id: doc.id });
     });
 
     chatsSnapshot2.forEach((doc) => {
-      chats.push({...doc.data(), id: doc.id});
+      chats.push({ ...doc.data(), id: doc.id });
     });
 
     res.status(200).send(chats);

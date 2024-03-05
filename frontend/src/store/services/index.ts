@@ -1,3 +1,4 @@
-import { loginUser } from './auth.service';
+import { loginUser } from "./auth.service";
+import { createChat } from './chat.service';
 
-export {loginUser};
+export { loginUser, createChat };
