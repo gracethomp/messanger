@@ -2,12 +2,12 @@ import { FC, ReactNode } from "react";
 
 type ButtonProps = {
   children: ReactNode;
-  onClick: () => void;
+  onClick?: () => void;
 };
 
 const Button: FC<ButtonProps> = (props) => {
   const handleClick = () => {
-    props.onClick();
+    if (props.onClick) props.onClick();
   };
 
   return (

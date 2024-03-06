@@ -2,6 +2,7 @@ import { ChangeEvent, useState } from "react";
 import { useAppDispatch } from "../../hooks/redux";
 import { loginUser } from "../../store/services";
 import { Button, Input } from "../../ui/common";
+import { setEmail } from "../../store/slices/authSlice";
 
 type InputPlaceholders = {
   placeholder: string;
@@ -17,6 +18,7 @@ const LoginPage = () => {
 
   const handleLogin = async () => {
     dispatch(loginUser({ email: username, password: password }));
+    dispatch(setEmail(username));
   };
 
   const inputPlaceholders: InputPlaceholders[] = [
@@ -36,7 +38,11 @@ const LoginPage = () => {
     <div className="flex justify-center items-center h-screen flex-col gap-8">
       <h1 className="text-4xl">Hi! Please log in</h1>
       {inputPlaceholders.map((value) => (
-        <Input placeholder={value.placeholder} value={value.value} onChange={value.method}/>
+        <Input
+          placeholder={value.placeholder}
+          value={value.value}
+          onChange={value.method}
+        />
       ))}
       <Button onClick={() => handleLogin()}>Log in</Button>
     </div>

@@ -1,3 +1,4 @@
 import { LoginPage } from "./login";
+import { ChatPage, NewChat } from './chat';
 
-export { LoginPage };
+export { LoginPage, ChatPage, NewChat };
