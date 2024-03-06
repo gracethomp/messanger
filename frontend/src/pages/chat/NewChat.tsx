@@ -1,16 +1,17 @@
 import { useNavigate } from "react-router-dom";
 import { Button, Input } from "../../ui/common";
 import { ChangeEvent, useState } from "react";
-import { useAppDispatch } from '../../hooks/redux';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { createChat } from '../../store/services';
 
 const ChatPage = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState<string>("");
   const dispatch = useAppDispatch();
+  const token = useAppSelector((state) => state.auth.token);
+  const [email, setEmail] = useState<string>("");
 
   const handleButtonClick = () => {
-    dispatch(createChat({user2: email}));
+    dispatch(createChat({user2: email, token: token ?? "" }));
     navigate("/login");
   }
 

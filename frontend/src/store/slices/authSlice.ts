@@ -5,11 +5,15 @@ import { loginUser } from '../services';
 interface AuthState {
   isLoggedIn: boolean;
   status: string;
+  email: string;
+  token: string | null;
 }
 
 const initialState: AuthState = {
   isLoggedIn: false,
   status: 'idle',
+  email: '',
+  token: '',
 };
 
 const authSlice = createSlice({
@@ -22,6 +26,9 @@ const authSlice = createSlice({
     logout(state) {
       state.isLoggedIn = false;
     },
+    setEmail(state, action) {
+      state.email = action.payload;
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -31,6 +38,7 @@ const authSlice = createSlice({
       .addCase(loginUser.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.isLoggedIn = true;
+        state.token = action.payload.token;
         // state.error = null;
       })
       .addCase(loginUser.rejected, (state, action) => {
@@ -41,6 +49,6 @@ const authSlice = createSlice({
   },
 });
 
-export const { login, logout } = authSlice.actions;
+export const { login, logout, setEmail } = authSlice.actions;
 
 export default authSlice.reducer;

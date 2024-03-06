@@ -6,14 +6,13 @@ interface ErrorResponse {
 
 export const createChat = createAsyncThunk(
   "chat/create",
-  async (payload: { user2: string }) => {
+  async (payload: { user2: string; token: string }) => {
     try {
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImVtYWlsIjoibWFpbDIzQGdtYWlsLmNvbSJ9LCJpYXQiOjE3MDk2NzE0MDMsImV4cCI6MTcwOTY5MzAwM30.0Y8hEKSoGh3uKHMcfBu4hgIyClswDpi9UlCKrX6JHQA",
+          Authorization: payload.token,
         },
         body: JSON.stringify(payload),
       });
@@ -29,13 +28,12 @@ export const createChat = createAsyncThunk(
 
 export const getAllChats = createAsyncThunk(
   "chat/fetchChats",
-  async (_, { rejectWithValue }) => {
+  async (payload: { token: string }, { rejectWithValue }) => {
     try {
       const response = await fetch("/api/chat", {
         method: "GET",
         headers: {
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImVtYWlsIjoibWFpbDIzQGdtYWlsLmNvbSJ9LCJpYXQiOjE3MDk2NzE0MDMsImV4cCI6MTcwOTY5MzAwM30.0Y8hEKSoGh3uKHMcfBu4hgIyClswDpi9UlCKrX6JHQA",
+          Authorization: payload.token,
         },
       });
       if (!response.ok) {

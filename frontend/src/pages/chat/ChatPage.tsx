@@ -7,17 +7,18 @@ import { getAllChats } from "../../store/services/chat.service";
 const ChatPage = () => {
   const navigate = useNavigate();
   const chats = useAppSelector((state) => state.chat.chats);
+  const token = useAppSelector((state) => state.auth.token);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(getAllChats());
+    dispatch(getAllChats({ token: token ?? "" }));
   }, []);
 
   return (
     <div className="flex justify-center items-center h-screen flex-col">
       {chats.map((value) => (
         <div key={value.id}>
-          <p>{value.user1 + ' ' + value.user2}</p>
+          <p>{value.user1 + " " + value.user2}</p>
         </div>
       ))}
       <Button onClick={() => navigate("/new-chat")}>Create new chat</Button>
