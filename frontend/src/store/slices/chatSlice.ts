@@ -1,10 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { Chat } from "../../utils/types";
-import { getAllChats } from '../services/chat.service';
+import { getAllChats } from "../services/chat.service";
 
 interface ChatState {
   chats: Chat[];
   status: string;
+  currentChatId?: Chat;
 }
 
 const initialState: ChatState = {
@@ -15,7 +16,11 @@ const initialState: ChatState = {
 const authSlice = createSlice({
   name: "chats",
   initialState,
-  reducers: {},
+  reducers: {
+    setCurrentChat(state, action) {
+      state.currentChatId = action.payload;
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getAllChats.pending, (state) => {
@@ -32,5 +37,7 @@ const authSlice = createSlice({
       });
   },
 });
+
+export const { setCurrentChat } = authSlice.actions;
 
 export default authSlice.reducer;
